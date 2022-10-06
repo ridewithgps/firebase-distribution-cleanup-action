@@ -1,0 +1,19 @@
+name: 'Firebase App Distribution Cleanup Helper'
+description: 'GitHub Action that removes artifacts from Firebase App Distribution'
+author: 'Kevin Purdy <kevin.purdy@ridewithgps.com>'
+inputs:
+  appId:
+    description: 'App id can be found on the General Settings page'
+    required: true
+  authenticationFile:
+    description: 'JSON Credentials for authorized service account'
+    required: true
+  criteria:
+    description: 'A search string to match against names of builds to remove'
+    required: true
+branding:
+  color: 'red'
+  icon: 'delete'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
