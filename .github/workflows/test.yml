@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Run the cleanup step
         id: cleanup
-        uses: ridewithgps/firebase-distribution-cleanup-action@1
+        uses: ridewithgps/firebase-distribution-cleanup-action@v0.5
         with:
           criteria: ${{ inputs.criteria }}
           appId: ${{ secrets.FIREBASE_APP_ID }}

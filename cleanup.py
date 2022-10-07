@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-from __future__ import print_function
-
 import os.path
-
-from sys import argv
+import sys
 
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
@@ -38,8 +35,8 @@ def main():
             print(err)
 
 
-    if len(argv) > 2:
-        pr = argv[2]
+    if len(sys.argv) > 2:
+        pr = sys.argv[2]
         print("Scanning: ", pr)
         toRemove = filter(lambda x: pr in x['displayVersion'], items)
 
