@@ -25,27 +25,31 @@ def main():
     go = True
     nextPageToken = ''
 
-    while go:
-        try:
-            res = releases.list(parent = APP_ID, pageToken = nextPageToken).execute()
-            nextPageToken = res.get('nextPageToken')
-            items.extend(res['releases'])
-            go = nextPageToken
-        except HttpError as err:
-            print(err)
+    if len(sys.argv) > 1:
+        while go:
+            try:
+                res = releases.list(parent = APP_ID, pageToken = nextPageToken).execute()
+                nextPageToken = res.get('nextPageToken')
+                items.extend(res['releases'])
+                go = nextPageToken
+            except HttpError as err:
+                print(err)
+        print("Found %s artifacts" % len(items))
 
 
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 2 and len(sys.argv[2]) > 0:
         pr = sys.argv[2]
-        print("Scanning: ", pr)
-        toRemove = filter(lambda x: pr in x['displayVersion'], items)
+        print("Matching builds against: %s" % pr)
+        toRemove = list(filter(lambda x: pr in x['displayVersion'], items))
 
         names = [ x['name'] for x in toRemove ]
-        print(names)
 
         if len(names) > 0:
             dell = releases.batchDelete(parent = APP_ID, body = {'names': names})
             dell.execute()
+
+        print("Removed %s artifacts:" % len(names))
+        print("\n".join(["  %s" % x['displayVersion'] for x in toRemove]))
 
 if __name__ == '__main__':
     main()

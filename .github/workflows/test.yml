@@ -1,8 +1,10 @@
-on: 
+name: Test cleanup action
+
+on:
   workflow_dispatch:
     inputs:
       criteria:
-        description: 'Critera for deletion'
+        description: 'Criteria for deletion'
         required: true
         type: string
 
@@ -12,7 +14,7 @@ jobs:
     steps:
       - name: Run the cleanup step
         id: cleanup
-        uses: ridewithgps/firebase-distribution-cleanup-action@v0.5
+        uses: ridewithgps/firebase-distribution-cleanup-action@1
         with:
           criteria: ${{ inputs.criteria }}
           appId: ${{ secrets.FIREBASE_APP_ID }}
