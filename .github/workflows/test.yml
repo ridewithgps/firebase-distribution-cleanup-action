@@ -1,0 +1,19 @@
+on: 
+  workflow_dispatch:
+    inputs:
+      criteria:
+        description: 'Critera for deletion'
+        required: true
+        type: string
+
+jobs:
+  remove-the-builds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the cleanup step
+        id: cleanup
+        uses: ridewithgps/firebase-distribution-cleanup-action@1
+        with:
+          criteria: ${{ inputs.criteria }}
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          authenticationFile: ${{ secrets.FIREBASE_AUTH_FILE }} 
