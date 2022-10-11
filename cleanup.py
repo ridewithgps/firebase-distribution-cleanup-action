@@ -18,6 +18,7 @@ def main():
         service = build('appdistribution', 'v1', discoveryServiceUrl=DISCOVERY_URI)
     except HttpError as err:
         print(err)
+        exit(1)
 
     releases = service.projects().apps().releases()
 
@@ -34,6 +35,7 @@ def main():
                 go = nextPageToken
             except HttpError as err:
                 print(err)
+                go = None
         print("Found %s artifacts" % len(items))
 
 
